@@ -1,9 +1,9 @@
 [project]
 name = "wimsey"
 version = "0.1.0"
-description = "Add your description here"
+description = "A lightweight data contracts framework"
 authors = [
-    { name = "Ben", email = "unknown@domain.invalid" }
+    { name = "Ben", email = "benrutter@posteo.net" }
 ]
 dependencies = [
     "narwhals>=1.10.0",

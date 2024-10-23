@@ -1,8 +1,10 @@
 # Wimsey 🔍
 
+[![PyPI version](https://badge.fury.io/py/wimsey.svg)](https://badge.fury.io/py/wimsey)
+
 A lightweight and flexible data contract library.
 
-Wimsey is designed a very lightweight data contracts library, simlar to great-expections or soda-core, that is built on top of Narwhals. It is designed to have minimal import times and dependencies.
+Wimsey is designed a very lightweight data contracts library, simlar to great-expections or soda-core, that is built on top of [Narwhals](https://github.com/narwhals-dev/narwhals). It is designed to have minimal import times and dependencies.
 
 ## What is a data contract?
 
@@ -28,7 +30,7 @@ Here we have two tests, firstly, we're checking that "awesome_column" is between
 
 In terms of using the Wimsey libary, there's essentially only two functions you'll need, `validate` and/or `test`.
 
-Because Wimsey uses Narwhals under the hood, you can run these tests directly on your dataframe library of choice (pandas, polars, dask etc) as long as it's supported via Narwhals. Here's an example of using "validate" with pandas, which will throw an exception if tests fail, and otherwise pass back your data frame so you can continue happily:
+Because Wimsey uses Narwhals under the hood, you can run these tests directly on your dataframe library of choice ([pandas](https://pandas.pydata.org/), [polars](https://pola.rs/), [dask](https://www.dask.org/) etc) as long as it's supported via Narwhals. Here's an example of using "validate" with pandas, which will throw an exception if tests fail, and otherwise pass back your data frame so you can continue happily:
 
 ```python
 import pandas as pd
