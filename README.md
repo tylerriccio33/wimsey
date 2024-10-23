@@ -62,3 +62,12 @@ else:
 ## Project Status
 
 Wimsey is veeeery, veeerrrry early, there's a very small amount of supported tests, and even less documentation. Feedback, contributions and requests are all welcome!
+
+
+## Comparison
+
+| Tool               | Is a Library | Import Time  | Import Size | Is actually finished and ready to use |
+|--------------------|--------------|--------------|-------------|---------------------------------------|
+| Great Expectations | 👍           | 3.25 seconds | 11479KB     | 👍                                    |
+| Soda Core          | 👎           | N/A          | N/A         | 👍                                    |
+| Wimsey             | 👍           | 0.09 seconds | 15KB        | 😭                                    |
