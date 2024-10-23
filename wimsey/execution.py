@@ -18,7 +18,7 @@ class DataValidationException(Exception):
     ...
 
 
-def run_all_tests(df: FrameT, tests: list[Callable[[...], result]]) -> result:
+def run_all_tests(df: FrameT, tests: list[Callable[[Any], result]]) -> final_result:
     description: dict[str, Any] = describe(df)
     results: list[result] = []
     for test in tests:
@@ -30,7 +30,7 @@ def run_all_tests(df: FrameT, tests: list[Callable[[...], result]]) -> result:
 
 
 def test(
-    df: FrameT, contract: str | dict, storage_options: dict | None = None
+    df: FrameT, contract: str | list[dict], storage_options: dict | None = None
 ) -> final_result:
     """
     Carry out tests on dataframe and return results. This will *not* raise
@@ -50,7 +50,7 @@ def test(
 
 
 def validate(
-    df: FrameT, contract: str | dict, storage_options: dict | None = None
+    df: FrameT, contract: str | list[dict], storage_options: dict | None = None
 ) -> FrameT:
     """
     Carry out tests on dataframe, returning original dataframe if tests are
@@ -58,11 +58,11 @@ def validate(
     """
     results = test(
         df=df,
-        path=contract,
+        contract=contract,
         storage_options=storage_options,
     )
     if not results.success:
-        failures: str[list] = [
+        failures: list[str] = [
             f"{i.name} (unexpected: {i.unexpected})"
             for i in results.results
             if not i.success

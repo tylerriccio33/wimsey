@@ -11,9 +11,9 @@ def collect_tests(config: list[dict]) -> list[Callable]:
     """
     Take a configuration, and build out tests
     """
-    tests: list[callable] = []
+    tests: list[Callable] = []
     for item in config:
-        test: callable | None = possible_tests.get(item.get("test"))
+        test: Callable | None = possible_tests.get(item.get("test"))  # type: ignore[arg-type]
         if test is None:
             msg = (
                 "Issue reading configuration, for at least one test, either no "
@@ -37,7 +37,7 @@ def read_config(path: str, storage_options: dict | None = None) -> list[Callable
             import yaml
 
             config = yaml.safe_load(contents)
-            return collect_tests(config)
+            return collect_tests(config)  # type: ignore[arg-type]
         except ImportError as exception:
             msg = (
                 "It looks like you're trying to import a yaml configured "
@@ -46,4 +46,4 @@ def read_config(path: str, storage_options: dict | None = None) -> list[Callable
             )
             raise ImportError(msg) from exception
     config = json.loads(contents)
-    return collect_tests(config)
+    return collect_tests(config)  # type: ignore[arg-type]

@@ -39,4 +39,10 @@ def describe(df: FrameT) -> dict[str, float]:
         *min_exprs,
         *max_exprs,
     )
-    return {k: v[0] for k, v in df_metrics.to_dict(as_series=False).items()}
+    try:
+        return {k: v[0] for k, v in df_metrics.to_dict(as_series=False).items()}  # type: ignore[union-attr]
+    except AttributeError:
+        return {
+            k: v[0]
+            for k, v in df_metrics.collect().to_dict(as_series=False).items()  # type: ignore[union-attr]
+        }

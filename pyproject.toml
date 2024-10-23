@@ -1,6 +1,6 @@
 [project]
 name = "wimsey"
-version = "0.1.0"
+version = "0.1.2"
 description = "A lightweight data contracts framework"
 authors = [
     { name = "Ben", email = "benrutter@posteo.net" }
@@ -23,6 +23,9 @@ dev-dependencies = [
     "ipython>=8.21.0",
     "pandas>=2.2.3",
     "pyyaml>=6.0.2",
+    "polars>=1.10.0",
+    "mypy>=1.13.0",
+    "types-pyyaml>=6.0.12.20240917",
 ]
 
 [tool.hatch.metadata]

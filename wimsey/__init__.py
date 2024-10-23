@@ -1,1 +1,1 @@
-from execution import DataValidationException, Test, Validate  # noqa
+from wimsey.execution import DataValidationException, test, validate  # noqa

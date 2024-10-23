@@ -9,7 +9,7 @@ class result:
     unexpected: Any = None
 
 
-def _range_check(metric: str) -> Callable[[...], result]:
+def _range_check(metric: str) -> Callable:
     """
     Factory function for generated tests of the form "x should be within range"
     """
