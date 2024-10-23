@@ -1,28 +1,42 @@
-from typing import Any
-import importlib
+import narwhals as nw
+from narwhals.typing import FrameT
 
-import pandas as pd
-import ibis
-from ibis.expr.types.relations import Table
-from ufo.wrappers import coerce_into
 
-@coerce_into(False, ImportError)
-def is_lib_df(df: Any, import_route: str, object_name: str):
-    to_match = getattr(
-        importlib.import_module(import_route),
-        object_name,
+@nw.narwhalify
+def describe(df: FrameT) -> dict[str, float]:
+    """
+    Outputs a dictionary for use in testing, mimicking polars 'describe' method.
+
+    Note this code is adapted from polars own descrip function.
+    """
+    if not df.columns:
+        return {}
+
+    # Determine which columns should get std/mean/percentile statistics
+    stat_cols = {c for c, dt in df.schema.items() if dt.is_numeric()}
+
+    mean_exprs = [
+        (nw.col(c).mean() if c in stat_cols else nw.lit(None)).alias(f"mean_{c}")
+        for c in df.columns
+    ]
+    std_exprs = [
+        (nw.col(c).std() if c in stat_cols else nw.lit(None)).alias(f"std_{c}")
+        for c in df.columns
+    ]
+    min_exprs = [
+        (nw.col(c).min() if c in stat_cols else nw.lit(None)).alias(f"min_{c}")
+        for c in df.columns
+    ]
+    max_exprs = [
+        (nw.col(c).max() if c in stat_cols else nw.lit(None)).alias(f"max_{c}")
+        for c in df.columns
+    ]
+    df_metrics = df.select(
+        nw.col(*df.columns).count().name.prefix("count_"),
+        nw.col(*df.columns).null_count().name.prefix("null_count_"),
+        *mean_exprs,
+        *std_exprs,
+        *min_exprs,
+        *max_exprs,
     )
-    return isinstance(df, to_match)
-
-def dataframe_to_ibis(df) -> Table:
-    if is_lib_df(df, "pandas", "DataFrame"):
-        return ibis.pandas.connect({"df": df}).table("df")
-    if is_lib_df(df,  "dask.dataframe", "DataFrame"):
-        return ibis.dask.connect({"df": df}).table("df")
-    if is_lib_df(df, "polars.dataframe.frame", "DataFrame"):
-        return ibis.polars.connect({"df": df}).table("df")
-    if is_lib_df(df, "pyarrow", "Table"):
-        return ibis.connect("duckdb://testing").create_table("df", df, overwrite=True)
-    raise NotImplementedError("The given dataframe is not currently supported")
-
-
+    return {k: v[0] for k, v in df_metrics.to_dict(as_series=False).items()}
