@@ -66,8 +66,8 @@ Wimsey is veeeery, veeerrrry early, there's a very small amount of supported tes
 
 ## Comparison
 
-| Tool               | Is a Library | Import Time  | Import Size | Is actually finished and ready to use |
-|--------------------|--------------|--------------|-------------|---------------------------------------|
-| Great Expectations | 👍           | 3.25 seconds | 11479KB     | 👍                                    |
-| Soda Core          | 👎           | N/A          | N/A         | 👍                                    |
-| Wimsey             | 👍           | 0.09 seconds | 15KB        | 😭                                    |
+| Tool               | Import Time  | PyPi Size   | Dependencies | Has a GUI Framework   |
+|--------------------|--------------|-------------|--------------|-----------------------|
+| Great Expectations | 3.25 seconds | 5367KB      | 25           | Yes                   |
+| Soda Core          | N/A          | 145KB       | 11           | Yes (non open source) |
+| Wimsey             | 0.09 seconds | 6KB         | 2            | No                    |
