@@ -7,13 +7,18 @@ import fsspec
 from wimsey.tests import possible_tests
 
 
-def collect_tests(config: list[dict]) -> list[Callable]:
+def collect_tests(config: list[dict] | dict | list[Callable]) -> list[Callable]:
     """
     Take a configuration, and build out tests
     """
+    list_config: list[dict] | list[Callable] = (
+        config if isinstance(config, list) else [config]
+    )
+    if isinstance(list_config[0], Callable):
+        return list_config
     tests: list[Callable] = []
-    for item in config:
-        test: Callable | None = possible_tests.get(item.get("test"))  # type: ignore[arg-type]
+    for item in list_config:
+        test: Callable | None = possible_tests.get(item.pop("test"))(**item)  # type: ignore[arg-type]
         if test is None:
             msg = (
                 "Issue reading configuration, for at least one test, either no "

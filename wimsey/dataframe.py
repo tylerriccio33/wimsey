@@ -31,14 +31,20 @@ def describe(df: FrameT) -> dict[str, float]:
         (nw.col(c).max() if c in stat_cols else nw.lit(None)).alias(f"max_{c}")
         for c in df.columns
     ]
+    null_exprs = [
+        (nw.col(f"null_count_{c}") / nw.col("length")).alias(f"null_percentage_{c}")
+        for c in df.columns
+    ]
     df_metrics = df.select(
+        nw.lit("_^&^_".join(df.columns)).alias("columns"),
         nw.col(*df.columns).count().name.prefix("count_"),
         nw.col(*df.columns).null_count().name.prefix("null_count_"),
+        nw.lit(len(df)).alias("length"),
         *mean_exprs,
         *std_exprs,
         *min_exprs,
         *max_exprs,
-    )
+    ).with_columns(*null_exprs)
     try:
         return {k: v[0] for k, v in df_metrics.to_dict(as_series=False).items()}  # type: ignore[union-attr]
     except AttributeError:
