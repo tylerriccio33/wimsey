@@ -18,12 +18,12 @@ Let's start by taking a look at an example data contract, Wimsey supports readin
 
 ```yaml
 - column: awesome_column
-  test: mean_should_be
-  greater_than: -10
-  less_than: 100
+  test: mean_should
+  be_greater_than: -10
+  be_less_than: 100
 - column: another_great_column
-  test: null_count_should_be
-  exactly: 0
+  test: null_count_should
+  be_exactly: 0
 ```
 
 Here we have two tests, firstly, we're checking that "awesome_column" is between -10 and 100, and then we're checking that "another_great_column" has no null entries.

@@ -1,6 +1,6 @@
 [project]
 name = "wimsey"
-version = "0.1.2"
+version = "0.2.0"
 description = "A lightweight data contracts framework"
 authors = [
     { name = "Ben", email = "benrutter@posteo.net" }

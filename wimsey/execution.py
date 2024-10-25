@@ -21,8 +21,8 @@ class DataValidationException(Exception):
 def run_all_tests(df: FrameT, tests: list[Callable[[Any], result]]) -> final_result:
     description: dict[str, Any] = describe(df)
     results: list[result] = []
-    for test in tests:
-        results.append(test(description))
+    for i_test in tests:
+        results.append(i_test(description))
     return final_result(
         success=all(i.success for i in results),
         results=results,
@@ -30,7 +30,7 @@ def run_all_tests(df: FrameT, tests: list[Callable[[Any], result]]) -> final_res
 
 
 def test(
-    df: FrameT, contract: str | list[dict], storage_options: dict | None = None
+    df: FrameT, contract: str | list[dict] | dict, storage_options: dict | None = None
 ) -> final_result:
     """
     Carry out tests on dataframe and return results. This will *not* raise
@@ -50,7 +50,7 @@ def test(
 
 
 def validate(
-    df: FrameT, contract: str | list[dict], storage_options: dict | None = None
+    df: FrameT, contract: str | list[dict] | dict, storage_options: dict | None = None
 ) -> FrameT:
     """
     Carry out tests on dataframe, returning original dataframe if tests are
