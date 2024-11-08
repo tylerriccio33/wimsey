@@ -8,6 +8,7 @@ authors = [
 dependencies = [
     "narwhals>=1.10.0",
     "fsspec>=2024.10.0",
+    "pyyaml>=6.0.2",
 ]
 readme = "README.md"
 requires-python = ">= 3.10"
@@ -37,3 +38,9 @@ dev-dependencies = [
 
 [tool.hatch.metadata]
 allow-direct-references = true
+
+[dependency-groups]
+dev = [
+    "polars>=1.12.0",
+    "pytest>=8.3.3",
+]
