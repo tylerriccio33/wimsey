@@ -1,8 +1,9 @@
-name: Deploy
+name: Build Docs
 on:
   push:
     branches:
       - main
+
 jobs:
   build:
     name: Deploy docs to GitHub Pages
@@ -10,13 +11,15 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Build
-        uses: Tiryoh/actions-mkdocs@v0
         with:
-          mkdocs_version: 'latest'
-          configfile: 'mkdocs.yml'
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./site
+          fetch-depth: 0
+      - name: Set up Python
+        uses: actions/setup-python@v2
+      - name: Build and Deploy Docs
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements-dev.lock
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git config pull.rebase false
+          python -m mkdocs gh-deploy
