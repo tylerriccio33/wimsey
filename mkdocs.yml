@@ -2,12 +2,15 @@ site_name: Wimsey
 
 nav:
   - Intro: index.md
-  - Motivation: motivation.md
   - Quick Start: quick-start.md
+  - Building Tests: building-tests.md
+  - Motivation: motivation.md
   - Test Catalogue: possible-tests.md
 
 theme:
   name: material
+  icon:
+    logo: fontawesome/solid/magnifying-glass-chart
   palette:
     - scheme: default
       primary: brown
